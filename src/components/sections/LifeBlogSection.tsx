@@ -61,62 +61,67 @@ export function LifeBlogSection() {
   const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Title animation
-      gsap.fromTo(
-        titleRef.current,
-        { y: 50, opacity: 0 },
-        {
-          scrollTrigger: {
-            trigger: titleRef.current,
-            start: 'top 80%',
-            toggleActions: 'play none none none',
-          },
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          ease: 'power3.out',
-        }
-      );
-
-      // Grid items animation
-      const gridItems = gridRef.current?.children || [];
-      if (gridItems.length > 0) {
+    // Delay to ensure scroller is set up
+    const timeoutId = setTimeout(() => {
+      const ctx = gsap.context(() => {
+        // Title animation
         gsap.fromTo(
-          gridItems,
-          {
-            y: 80,
-            opacity: 0,
-          },
+          titleRef.current,
+          { y: 50, opacity: 0 },
           {
             scrollTrigger: {
-              trigger: gridRef.current,
+              trigger: titleRef.current,
               start: 'top 80%',
-              toggleActions: 'play none none none',
+              toggleActions: 'play none none reset',
             },
             y: 0,
             opacity: 1,
-            duration: 0.8,
-            stagger: 0.15,
+            duration: 1,
             ease: 'power3.out',
           }
         );
-      }
-    }, sectionRef);
 
-    return () => ctx.revert();
+        // Grid items animation
+        const gridItems = gridRef.current?.children || [];
+        if (gridItems.length > 0) {
+          gsap.fromTo(
+            gridItems,
+            {
+              y: 80,
+              opacity: 0,
+            },
+            {
+              scrollTrigger: {
+                trigger: gridRef.current,
+                start: 'top 80%',
+                toggleActions: 'play none none reset',
+              },
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              stagger: 0.15,
+              ease: 'power3.out',
+            }
+          );
+        }
+      }, sectionRef);
+
+      return () => ctx.revert();
+    }, 200);
+
+    return () => clearTimeout(timeoutId);
   }, []);
 
   return (
     <section
       id="life-blog"
       ref={sectionRef}
-      className="py-20 bg-background relative overflow-hidden"
+      className="h-full w-full flex items-center bg-background relative overflow-y-auto"
     >
       {/* Background Decoration */}
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-foreground/5 rounded-full blur-3xl" />
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 py-20 relative z-10 w-full">
         <div className="text-center mb-16">
           <h2
             ref={titleRef}

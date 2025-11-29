@@ -15,33 +15,41 @@ export function Footer() {
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const footerContent = contentRef.current?.children || [];
-      if (footerContent.length > 0) {
-        gsap.fromTo(
-          footerContent,
-          { y: 50, opacity: 0 },
-          {
-            scrollTrigger: {
-              trigger: footerRef.current,
-              start: 'top 90%',
-              toggleActions: 'play none none none',
-            },
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            stagger: 0.15,
-            ease: 'power3.out',
-          }
-        );
-      }
-    }, footerRef);
+    // Delay to ensure scroller is set up
+    const timeoutId = setTimeout(() => {
+      const ctx = gsap.context(() => {
+        const footerContent = contentRef.current?.children || [];
+        if (footerContent.length > 0) {
+          gsap.fromTo(
+            footerContent,
+            { y: 50, opacity: 0 },
+            {
+              scrollTrigger: {
+                trigger: footerRef.current,
+                start: 'top 90%',
+                toggleActions: 'play none none reset',
+              },
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              stagger: 0.15,
+              ease: 'power3.out',
+            }
+          );
+        }
+      }, footerRef);
 
-    return () => ctx.revert();
+      return () => ctx.revert();
+    }, 200);
+
+    return () => clearTimeout(timeoutId);
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const scrollContainer = document.querySelector('.snap-y');
+    if (scrollContainer) {
+      scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const socialLinks = [

@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/sections/HeroSection";
 import { TechBlogSection } from "@/components/sections/TechBlogSection";
 import { LifeBlogSection } from "@/components/sections/LifeBlogSection";
 import { Footer } from "@/components/layout/Footer";
+import { FullPageScroll } from "@/components/layout/FullPageScroll";
 
 export const metadata: Metadata = {
   title: "Senzee's Blog - 首页",
@@ -14,12 +15,20 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="overflow-x-hidden">
-        <HeroSection />
-        <TechBlogSection />
-        <LifeBlogSection />
-      </main>
-      <Footer />
+      <FullPageScroll>
+        <section className="snap-start h-screen">
+          <HeroSection />
+        </section>
+        <section className="snap-start h-screen">
+          <TechBlogSection />
+        </section>
+        <section className="snap-start h-screen">
+          <LifeBlogSection />
+        </section>
+        <section className="snap-start">
+          <Footer />
+        </section>
+      </FullPageScroll>
     </>
   );
 }

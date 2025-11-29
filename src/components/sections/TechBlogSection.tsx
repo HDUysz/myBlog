@@ -56,61 +56,66 @@ export function TechBlogSection() {
   const cardsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        titleRef.current,
-        { y: 50, opacity: 0 },
-        {
-          scrollTrigger: {
-            trigger: titleRef.current,
-            start: 'top 80%',
-            toggleActions: 'play none none none',
-          },
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          ease: 'power3.out',
-        }
-      );
-
-      // Cards animation
-      const cards = cardsRef.current?.children || [];
-      if (cards.length > 0) {
+    // Delay to ensure scroller is set up
+    const timeoutId = setTimeout(() => {
+      const ctx = gsap.context(() => {
         gsap.fromTo(
-          cards,
-          {
-            y: 100,
-            opacity: 0,
-          },
+          titleRef.current,
+          { y: 50, opacity: 0 },
           {
             scrollTrigger: {
-              trigger: cardsRef.current,
+              trigger: titleRef.current,
               start: 'top 80%',
-              toggleActions: 'play none none none',
+              toggleActions: 'play none none reset',
             },
             y: 0,
             opacity: 1,
-            duration: 0.8,
-            stagger: 0.2,
+            duration: 1,
             ease: 'power3.out',
           }
         );
-      }
-    }, sectionRef);
 
-    return () => ctx.revert();
+        // Cards animation
+        const cards = cardsRef.current?.children || [];
+        if (cards.length > 0) {
+          gsap.fromTo(
+            cards,
+            {
+              y: 100,
+              opacity: 0,
+            },
+            {
+              scrollTrigger: {
+                trigger: cardsRef.current,
+                start: 'top 80%',
+                toggleActions: 'play none none reset',
+              },
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              stagger: 0.2,
+              ease: 'power3.out',
+            }
+          );
+        }
+      }, sectionRef);
+
+      return () => ctx.revert();
+    }, 200);
+
+    return () => clearTimeout(timeoutId);
   }, []);
 
   return (
     <section
       id="tech-blog"
       ref={sectionRef}
-      className="py-20 bg-muted/30 relative overflow-hidden"
+      className="h-full w-full flex items-center bg-muted/30 relative overflow-y-auto"
     >
       {/* Background Decoration */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-foreground/5 rounded-full blur-3xl" />
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 py-20 relative z-10 w-full">
         <div className="text-center mb-16">
           <h2
             ref={titleRef}
