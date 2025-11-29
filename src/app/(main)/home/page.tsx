@@ -1,10 +1,9 @@
 import { Metadata } from "next";
-import { Header } from "@/components/layout/Header";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { TechBlogSection } from "@/components/sections/TechBlogSection";
 import { LifeBlogSection } from "@/components/sections/LifeBlogSection";
 import { Footer } from "@/components/layout/Footer";
-import { FullPageScroll } from "@/components/layout/FullPageScroll";
+import FullWrap from "./feature/fullwrap";
 
 export const metadata: Metadata = {
   title: "Senzee's Blog - 首页",
@@ -14,21 +13,14 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      <Header />
-      <FullPageScroll>
-        <section className="snap-start h-screen">
-          <HeroSection />
-        </section>
-        <section className="snap-start h-screen">
-          <TechBlogSection />
-        </section>
-        <section className="snap-start h-screen">
-          <LifeBlogSection />
-        </section>
-        <section className="snap-start">
-          <Footer />
-        </section>
-      </FullPageScroll>
+      <FullWrap>
+        <HeroSection />
+        <TechBlogSection />
+        <LifeBlogSection />
+      </FullWrap>
+      <section className="snap-start">
+        <Footer />
+      </section>
     </>
   );
 }
