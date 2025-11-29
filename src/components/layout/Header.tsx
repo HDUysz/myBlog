@@ -5,6 +5,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
+import Link from 'next/link';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -31,19 +32,10 @@ export function Header() {
   }, []);
 
   const navItems = [
-    { label: '首页', href: '#hero' },
-    { label: '技术博客', href: '#tech-blog' },
-    { label: '生活博客', href: '#life-blog' },
-    { label: '联系我', href: '#footer' },
+    { label: '首页', href: '/' },
+    { label: '技术博客', href: '/tech' },
+    { label: '生活博客', href: '/life' },
   ];
-
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsMenuOpen(false);
-    }
-  };
 
   return (
     <header
@@ -59,12 +51,12 @@ export function Header() {
         <ul className="hidden md:flex items-center gap-8">
           {navItems.map((item) => (
             <li key={item.href}>
-              <button
-                onClick={() => scrollToSection(item.href)}
+              <Link
+                href={item.href}
                 className="text-foreground/70 hover:text-foreground transition-colors duration-200 font-medium"
               >
                 {item.label}
-              </button>
+              </Link>
             </li>
           ))}
         </ul>
@@ -85,12 +77,13 @@ export function Header() {
             <ul className="container mx-auto px-4 py-4 flex flex-col gap-4">
               {navItems.map((item) => (
                 <li key={item.href}>
-                  <button
-                    onClick={() => scrollToSection(item.href)}
-                    className="text-foreground/70 hover:text-foreground transition-colors duration-200 font-medium w-full text-left"
+                  <Link
+                    href={item.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="text-foreground/70 hover:text-foreground transition-colors duration-200 font-medium w-full text-left block"
                   >
                     {item.label}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>
