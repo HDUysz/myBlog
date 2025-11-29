@@ -4,7 +4,9 @@ import { handleRootRedirect } from "./lib/redirect";
 export const config = {
   matcher: [
     "/",
-    "/home/:path*"
+    "/home/:path*",
+    "/life/:path*",
+    "/tech/:path*",
   ],
 }
 
