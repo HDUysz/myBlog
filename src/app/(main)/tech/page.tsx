@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { TechBlogList } from "@/components/sections/TechBlogList";
 
@@ -11,7 +10,6 @@ export const metadata: Metadata = {
 export default function TechBlogPage() {
   return (
     <>
-      <Header />
       <main className="min-h-screen bg-background">
         <TechBlogList />
       </main>

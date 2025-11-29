@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, Heart, Camera, Coffee, BookOpen, ArrowRight } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -59,6 +60,7 @@ export function LifeBlogSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     // Delay to ensure scroller is set up
@@ -138,9 +140,8 @@ export function LifeBlogSection() {
           {lifePosts.slice(0, 3).map((post, index) => (
             <Card
               key={post.id}
-              className={`life-card group border-2 hover:shadow-2xl hover:border-foreground transition-all duration-500 cursor-pointer overflow-hidden ${
-                index === 0 ? 'md:col-span-2' : ''
-              }`}
+              className={`life-card group border-2 hover:shadow-2xl hover:border-foreground transition-all duration-500 cursor-pointer overflow-hidden ${index === 0 ? 'md:col-span-2' : ''
+                }`}
             >
               <div className={`flex ${index === 0 ? 'flex-col md:flex-row' : 'flex-col'} h-full`}>
                 {/* Content */}
@@ -155,9 +156,8 @@ export function LifeBlogSection() {
                       </Badge>
                     </div>
                     <h3
-                      className={`font-bold text-foreground group-hover:text-foreground/70 transition-colors ${
-                        index === 0 ? 'text-2xl md:text-3xl' : 'text-xl'
-                      }`}
+                      className={`font-bold text-foreground group-hover:text-foreground/70 transition-colors ${index === 0 ? 'text-2xl md:text-3xl' : 'text-xl'
+                        }`}
                     >
                       {post.title}
                     </h3>
@@ -199,6 +199,7 @@ export function LifeBlogSection() {
           <Button
             size="lg"
             className="bg-foreground text-background hover:bg-foreground/90 group"
+            onClick={() => router.push('/life')}
           >
             探索更多生活故事
             <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />

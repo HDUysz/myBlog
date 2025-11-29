@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, Clock, ArrowRight, Code2, Cpu, Database } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -54,6 +55,7 @@ export function TechBlogSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     // Delay to ensure scroller is set up
@@ -179,6 +181,7 @@ export function TechBlogSection() {
             size="lg"
             variant="outline"
             className="group border-2"
+            onClick={() => router.push('/tech')}
           >
             查看更多技术文章
             <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
