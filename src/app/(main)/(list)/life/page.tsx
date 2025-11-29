@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { Footer } from "@/components/layout/Footer";
 import { LifeBlogList } from "@/components/sections/LifeBlogList";
 
 export const metadata: Metadata = {
