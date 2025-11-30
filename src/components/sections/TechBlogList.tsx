@@ -1,93 +1,26 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Calendar, Clock, ArrowRight, Code2, Cpu, Database, Zap, Terminal, Layers, Search } from 'lucide-react';
+import { Calendar, Clock, ArrowRight, Search } from 'lucide-react';
+import { techPosts } from '@/lib/data';
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface BlogPost {
-  id: number;
-  title: string;
-  excerpt: string;
-  date: string;
-  readTime: string;
-  category: string;
-  icon: React.ReactNode;
-  tags: string[];
-}
-
-const techPosts: BlogPost[] = [
-  {
-    id: 1,
-    title: 'Next.js 15 新特性深度解析',
-    excerpt: '探索 Next.js 15 带来的革命性变化，包括 App Router、Server Components 等新特性。',
-    date: '2025-01-15',
-    readTime: '8 分钟',
-    category: 'Frontend',
-    icon: <Code2 className="w-5 h-5" />,
-    tags: ['Next.js', 'React', 'SSR'],
-  },
-  {
-    id: 2,
-    title: 'GSAP 动画库实战指南',
-    excerpt: '从基础到进阶，全面掌握 GSAP 动画库，打造流畅炫酷的网页动效。',
-    date: '2025-01-10',
-    readTime: '10 分钟',
-    category: 'Animation',
-    icon: <Cpu className="w-5 h-5" />,
-    tags: ['GSAP', 'Animation', 'JavaScript'],
-  },
-  {
-    id: 3,
-    title: '构建高性能的 React 应用',
-    excerpt: '深入理解 React 性能优化技巧，包括 memo、useMemo、useCallback 等最佳实践。',
-    date: '2025-01-05',
-    readTime: '12 分钟',
-    category: 'React',
-    icon: <Database className="w-5 h-5" />,
-    tags: ['React', 'Performance', 'Optimization'],
-  },
-  {
-    id: 4,
-    title: 'TypeScript 高级类型技巧',
-    excerpt: '掌握 TypeScript 的高级类型系统，提升代码的类型安全性和可维护性。',
-    date: '2024-12-28',
-    readTime: '15 分钟',
-    category: 'TypeScript',
-    icon: <Terminal className="w-5 h-5" />,
-    tags: ['TypeScript', 'Types', 'Advanced'],
-  },
-  {
-    id: 5,
-    title: 'Tailwind CSS 最佳实践',
-    excerpt: '如何在大型项目中高效使用 Tailwind CSS，保持样式的一致性和可维护性。',
-    date: '2024-12-20',
-    readTime: '9 分钟',
-    category: 'CSS',
-    icon: <Layers className="w-5 h-5" />,
-    tags: ['Tailwind', 'CSS', 'Styling'],
-  },
-  {
-    id: 6,
-    title: 'Vite 构建工具深入剖析',
-    excerpt: '了解 Vite 的工作原理，以及如何利用 Vite 提升开发体验和构建速度。',
-    date: '2024-12-15',
-    readTime: '11 分钟',
-    category: 'Build Tools',
-    icon: <Zap className="w-5 h-5" />,
-    tags: ['Vite', 'Build', 'Tooling'],
-  },
-];
-
 export function TechBlogList() {
+  const router = useRouter();
   const headerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
+
+  const handlePostClick = (id: number) => {
+    router.push(`/tech/${id}`);
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -156,6 +89,7 @@ export function TechBlogList() {
           {techPosts.map((post) => (
             <Card
               key={post.id}
+              onClick={() => handlePostClick(post.id)}
               className="group border-2 hover:shadow-xl hover:border-foreground transition-all duration-300 cursor-pointer hover:-translate-y-2 overflow-hidden"
             >
               <CardHeader className="pb-3">
